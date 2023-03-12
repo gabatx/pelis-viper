@@ -6,13 +6,12 @@
 //
 
 import Foundation
-import UIKit
 
 protocol ListOfMoviesPresentable: AnyObject {
     var uiDelegate: LisOfMoviesUI? { get }
     var viewModelsMolvieCell: [MovieCellViewModel] {get set}
     func onViewAppear()
-    func didTapOnMovie(movie: MovieCellViewModel, view: UIViewController)
+    func onTapCell(atIndex: Int)
 }
 
 protocol LisOfMoviesUI: AnyObject {
@@ -21,21 +20,28 @@ protocol LisOfMoviesUI: AnyObject {
 
 class ListOfMoviesPresenter: ListOfMoviesPresentable {
 
-    private let listOfMoviesInteractor: ListOfMoviesInteractorInteractable
     weak var uiDelegate: LisOfMoviesUI?
     var viewModelsMolvieCell: [MovieCellViewModel] = []
-    private var mapper: MovieCellMapper
+    private var models: [PopularMovieEntity] = []
 
-    init(listOfMoviesInteractor: ListOfMoviesInteractorInteractable, mapper: MovieCellMapper = MovieCellMapper()) {
-        self.listOfMoviesInteractor = listOfMoviesInteractor
-        self.mapper = mapper
-    }
+    private let listOfMoviesInteractor: ListOfMoviesInteractorInteractable
+    private var mapper: MovieCellMapper
+    private let router: ListOfMoviesRouting
+
+    init(listOfMoviesInteractor: ListOfMoviesInteractorInteractable,
+         mapper: MovieCellMapper = MovieCellMapper(),
+         router: ListOfMoviesRouting) {
+            self.listOfMoviesInteractor = listOfMoviesInteractor
+            self.mapper = mapper
+            self.router = router
+        }
 
     // Método que llamamos desde la view. El presenter llama al interactor, y el interactor le devolverá los datos
     // El presenter le devolverá la informació mediante el patrón delegation
     func onViewAppear(){
         Task {
-            let models = await listOfMoviesInteractor.getListOfMovies().results
+            // Lo hacemos así porque vamos a necesitar el id de los modelos para luego enviar al detalle de la película
+            models = await listOfMoviesInteractor.getListOfMovies().results
             viewModelsMolvieCell = models.map { entity in
                 mapper.map(entity: entity)
             } // También así: models.map(mapper.map(entity:))
@@ -43,9 +49,9 @@ class ListOfMoviesPresenter: ListOfMoviesPresentable {
         }
     }
 
-    func didTapOnMovie(movie: MovieCellViewModel, view: UIViewController) {
-        // Conectamos con el router para que nos envíe a movieDetail
-        let router = MovieRouter(navigationController: view.navigationController)
-        router.showMovie(movie: movie)
+    // Dentro de esta lógica de este método necesitamos saber el id de la película
+    func onTapCell(atIndex: Int){
+        let movieId = models[atIndex].id.description // description: Pasa el valor al string
+        router.showDetailMovie(withId: movieId)
     }
 }

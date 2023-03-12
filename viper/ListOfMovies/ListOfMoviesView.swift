@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class ListOfMoviesView: UIViewController {
+class ListOfMoviesView: UIViewController, UITableViewDelegate {
 
     var presenter: ListOfMoviesPresentable?
     @IBOutlet weak var moviesTableView: UITableView!
@@ -18,6 +18,7 @@ class ListOfMoviesView: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         // Se llama al presenter para que se encargue de la lógica de negocio
 
         // El presenter no se instancia aquí porque eso ser hará en router de cada componente. ( view.presenter = presenter )
@@ -33,12 +34,8 @@ class ListOfMoviesView: UIViewController {
 
         // En cada vuelta obtenemos refrescamos las películas del tableView
         listOfMoviesTableViewDelegate?.didTapOnCell = { [weak self] index in
-            // Comprobamos que existe el listOfMoviesTableViewDelegate. Se hace con guard para ahorrar validar el nil en cada linea
-            guard let dataSource = self?.listOfMoviesTableViewDataSource else { return }
-            // Obtenemos el modelo a partir del array que tenemos en el dataSource
-            let movieModel = dataSource.movies[index]
-            // Llamamos al presenter para que se encargue de la lógica de negocio
-            self?.presenter?.didTapOnMovie(movie: movieModel, view: self!)
+            // Vamos hacia el detalle
+            self!.presenter?.onTapCell(atIndex: index)
         }
     }
 }
@@ -48,4 +45,5 @@ extension ListOfMoviesView: LisOfMoviesUI {
         listOfMoviesTableViewDataSource?.setMovies(movies: movies)
     }
 }
+
 

@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 
-
 class ListOfMoviesTableViewDelegate:NSObject, UITableViewDelegate {
 
     var didTapOnCell: ((Int) -> Void)?

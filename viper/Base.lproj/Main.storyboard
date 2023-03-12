@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WB0-VM-HPq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -79,7 +79,6 @@
                             <constraint firstItem="vPG-8E-Rs2" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="wzG-7L-Ir0"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="iq9-Gr-PKl"/>
                     <connections>
                         <outlet property="moviesTableView" destination="vPG-8E-Rs2" id="da3-wM-CKP"/>
                     </connections>
@@ -88,48 +87,56 @@
             </objects>
             <point key="canvasLocation" x="140" y="-2.1327014218009479"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="wTa-4j-lbM">
+        <!--Detail View-->
+        <scene sceneID="z4m-Fm-nTu">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="OwU-pk-OZH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <navigationController storyboardIdentifier="storyBoardId" id="WB0-VM-HPq" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="LFU-M8-ZpS">
-                        <rect key="frame" x="0.0" y="47" width="390" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                </navigationController>
-            </objects>
-            <point key="canvasLocation" x="-752" y="-2"/>
-        </scene>
-        <!--Movie View-->
-        <scene sceneID="llo-w3-Y8L">
-            <objects>
-                <viewController storyboardIdentifier="MovieIdStory" id="QfZ-4g-Leq" customClass="MovieView" customModule="viper" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="9KR-1v-R0I">
+                <viewController storyboardIdentifier="detailMovieIdStory" id="KnW-sN-j8M" customClass="DetailView" customModule="viper" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lQe-wy-7lB">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hola mundo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EPC-Xr-IMH">
-                                <rect key="frame" x="149" y="411.66666666666669" width="92" height="21"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0y3-CM-nhs">
+                                <rect key="frame" x="50" y="72" width="290" height="163"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="290" id="glb-Xn-kIh"/>
+                                    <constraint firstAttribute="width" secondItem="0y3-CM-nhs" secondAttribute="height" multiplier="16:9" id="qMI-S2-J3K"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aQw-P8-s3V">
+                                <rect key="frame" x="39" y="275" width="312" height="36"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vE3-t7-mWx">
+                                <rect key="frame" x="39" y="331" width="312" height="20.333333333333314"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="CYX-82-STk"/>
+                        <viewLayoutGuide key="safeArea" id="usI-hU-9Ge"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="EPC-Xr-IMH" firstAttribute="centerY" secondItem="9KR-1v-R0I" secondAttribute="centerY" id="0yA-UM-86o"/>
-                            <constraint firstItem="EPC-Xr-IMH" firstAttribute="centerX" secondItem="9KR-1v-R0I" secondAttribute="centerX" id="DZ6-Nd-vC5"/>
+                            <constraint firstItem="vE3-t7-mWx" firstAttribute="top" secondItem="aQw-P8-s3V" secondAttribute="bottom" constant="20" id="88o-8t-CDv"/>
+                            <constraint firstItem="aQw-P8-s3V" firstAttribute="centerX" secondItem="lQe-wy-7lB" secondAttribute="centerX" id="A3P-LJ-LtC"/>
+                            <constraint firstItem="aQw-P8-s3V" firstAttribute="width" secondItem="lQe-wy-7lB" secondAttribute="width" multiplier="0.8" id="PP8-bP-dGG"/>
+                            <constraint firstItem="vE3-t7-mWx" firstAttribute="centerX" secondItem="lQe-wy-7lB" secondAttribute="centerX" id="RgU-vx-zjN"/>
+                            <constraint firstItem="aQw-P8-s3V" firstAttribute="top" secondItem="0y3-CM-nhs" secondAttribute="bottom" constant="40" id="XhY-DX-QbT"/>
+                            <constraint firstItem="0y3-CM-nhs" firstAttribute="centerX" secondItem="lQe-wy-7lB" secondAttribute="centerX" id="YbK-MU-Ocl"/>
+                            <constraint firstItem="vE3-t7-mWx" firstAttribute="width" secondItem="aQw-P8-s3V" secondAttribute="width" id="dce-py-oEB"/>
+                            <constraint firstItem="0y3-CM-nhs" firstAttribute="top" secondItem="usI-hU-9Ge" secondAttribute="top" constant="25" id="kFZ-s3-gAF"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="movieTitle" destination="EPC-Xr-IMH" id="ykE-HE-fxm"/>
+                        <outlet property="movieDescription" destination="vE3-t7-mWx" id="sRf-tz-hnL"/>
+                        <outlet property="movieImageView" destination="0y3-CM-nhs" id="bjK-g5-oeo"/>
+                        <outlet property="movieName" destination="aQw-P8-s3V" id="rOR-uP-8xQ"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Puc-ub-fOe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="I2B-gF-gVk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1115" y="-2"/>
+            <point key="canvasLocation" x="1036.9230769230769" y="-2.1327014218009479"/>
         </scene>
     </scenes>
     <resources>

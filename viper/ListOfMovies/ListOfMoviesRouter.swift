@@ -8,27 +8,40 @@
 import Foundation
 import UIKit
 
-class ListOfMoviesRouter {
+protocol ListOfMoviesRouting {
+    var detailRouter: DetailRouter? { get }
+    var listOfMoviesView: ListOfMoviesView? { get }
+    func showDetailMovie(withId movieId: String)
+    func showListOfMovies(window: UIWindow?)
+}
+
+class ListOfMoviesRouter: ListOfMoviesRouting {
+
+    // Debemos unir los dos router:
+    var detailRouter: DetailRouter?
+    var listOfMoviesView: ListOfMoviesView?
 
     // Centro de este método es donde vamos a unir todas la piezas
     func showListOfMovies(window: UIWindow?){
-
-        // Instanciamos los componentes
         let interactor = ListOfMoviesInteractor()
-        let presenter = ListOfMoviesPresenter(listOfMoviesInteractor: interactor)
-        let view = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "listOfMoviesIdStory") as! ListOfMoviesView
+        let presenter = ListOfMoviesPresenter(listOfMoviesInteractor: interactor, router: self)
+        // Creamos las intancias listOfMoviesIdStory
+        listOfMoviesView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "listOfMoviesIdStory") as? ListOfMoviesView
+
+        self.detailRouter = DetailRouter()
 
         // Realizamos la unión
-        presenter.uiDelegate = view
-        view.presenter = presenter // Este presenter se va a encargar de lanzar la acción
-
-        // Creamos la instancia del navigation controller
-        view.title = "List of movies"
-        let navController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "storyBoardId") as! UINavigationController
-        navController.viewControllers = [view] // Asignamos la vista al navigation controller
+        presenter.uiDelegate = listOfMoviesView
+        listOfMoviesView?.presenter = presenter // Este presenter se va a encargar de lanzar la acción
 
         // Le indicamos la vista que se va a mostrar
-        window?.rootViewController = navController
+        window?.rootViewController = listOfMoviesView
         window?.makeKeyAndVisible()
+    }
+
+    func showDetailMovie(withId movieId: String){
+        // Como listOfMoviesView es un opcional no la podemos usar directamente en el argumento
+        guard let fromViewController = listOfMoviesView else { return }
+        detailRouter?.showDetail(fromViewController: fromViewController, movieId: movieId)
     }
 }
